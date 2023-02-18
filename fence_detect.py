@@ -75,7 +75,7 @@ class detect:
             # x1,y1,x2,y2,x3,y3,x4,y4 = sys.maxsize,sys.maxsize,0,sys.maxsize,sys.maxsize,0,0,0
 
             # Cordinated List to store the cordinates of ith image frame 
-           
+            x1,y1,x2,y2,x3,y3,x4,y4 = sys.maxsize,sys.maxsize,0,sys.maxsize,sys.maxsize,0,0,0
             try:
                 for line in lines:
                     xa,ya,xb,yb = line[0]
