@@ -40,7 +40,7 @@ class detect:
         self.fourcc = cv2.VideoWriter_fourcc(*'mp4v') 
         self.out = cv2.VideoWriter('output.mp4', self.fourcc, 30.0, (int(self.cap.get(3)), int(self.cap.get(4))),isColor=True)
     
-    def run(self):
+    def run(self,*kwargs):
         '''
         Function used to detect the fence 
         and return the optimised 
@@ -122,6 +122,12 @@ class detect:
         ret, frame = cap.read()
         pts2 = np.array([[int(xf1),int(yf1)],[int(xf3),int(yf3)],[int(xf4),int(yf4)],[int(xf2),int(yf2)]])
         cv2.polylines(frame,[pts2],True,(255,0,0),3)
+        [x3,y3] = pts2[1]
+        [x4,y4] = pts2[2]
+        k, m =25, (y3-pts2[0][1])//8
+        red_zone = np.array([[x3-k,y3-m],[x4-k,y4-m],[x4+k,y4+m],[x3+k,y3+m]])
+        # cv2.fillPoly(frame, [red_zone],(0,0,255)) 
+        cv2.polylines(frame,[red_zone],True,(0,0,255),3)
         cv2.imshow('Result', frame)
         cv2.waitKey(0)
 
@@ -129,9 +135,13 @@ class detect:
         cap.release()
         out.release()
         cv2.destroyAllWindows()
+
+        # Red Zone area
+        
+
         return pts2
 
 
 obj = detect('video1.mp4')
-obj.run()
+print(obj.run())
         
